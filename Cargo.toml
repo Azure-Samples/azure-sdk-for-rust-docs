@@ -1,0 +1,16 @@
+[package]
+name = "docs"
+description = "Examples using the Azure SDK for Rust"
+version = "0.1.0"
+license = "MIT"
+edition = "2021"
+authors = ["Heath Stewart (https://github.com/heaths)"]
+publish = false
+
+[dev-dependencies]
+azure_identity = "*"
+azure_security_keyvault_secrets = "*"
+tokio = { version = "1.47.1", features = ["macros"] }
+
+[lints.rust]
+unused_variables = "allow"
