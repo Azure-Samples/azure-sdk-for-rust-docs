@@ -27,7 +27,7 @@
 
 	// Configure tool-specific properties.
 	// "customizations
- 	//"postCreateCommand": "",
+ 	"postCreateCommand": "apt-get update && apt-get install -y pkg-config libssl-dev build-essential",
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	"remoteUser": "root"
