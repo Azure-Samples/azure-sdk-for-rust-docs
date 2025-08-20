@@ -8,8 +8,10 @@ authors = ["Heath Stewart (https://github.com/heaths)"]
 publish = false
 
 [dev-dependencies]
+azure_core = "*"
 azure_identity = "*"
 azure_security_keyvault_secrets = "*"
+futures = "*"
 tokio = { version = "1.47.1", features = ["macros"] }
 
 [lints.rust]
