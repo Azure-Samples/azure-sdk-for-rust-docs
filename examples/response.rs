@@ -6,7 +6,12 @@ use azure_security_keyvault_secrets::{models::Secret, SecretClient};
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let key_vault_endpoint = std::env::var("AZURE_KEY_VAULT_ENDPOINT")
-    .expect("AZURE_KEY_VAULT_ENDPOINT environment variable is required");
+        .map_err(|_| {
+            std::io::Error::new(
+                std::io::ErrorKind::NotFound,
+                "AZURE_KEY_VAULT_ENDPOINT environment variable is required",
+            )
+        })?;
 
     let credential = AzureCliCredential::new(None)?;
 
@@ -20,7 +25,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let response = key_vault_secret_client.get_secret("secret-name", "", None).await;
 
     match response {
-        Ok(secret) => println!("{}", secret.into_body().await?.value.unwrap_or_default()),
+        Ok(secret) => println!("{}", secret.into_body().await?.value.unwrap_or_else(|| Default::default())),
         Err(e) => match e.kind() {
             ErrorKind::HttpResponse { status, error_code, .. } if *status == StatusCode::NotFound => {
                 if let Some(code) = error_code {
