@@ -20,11 +20,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let response = key_vault_secret_client.get_secret("secret-name", "", None).await;
 
     match response {
-        Ok(response) => {
-            // await the response body and then inspect it
-            let secret = response.into_body().await?;
-            println!("Secret value: {:?}", secret.value);
-        }
+        Ok(secret) => println!("{}", secret.into_body().await?.value.unwrap_or_default()),
         Err(e) => match e.kind() {
             ErrorKind::HttpResponse { status, error_code, .. } if *status == StatusCode::NotFound => {
                 if let Some(code) = error_code {

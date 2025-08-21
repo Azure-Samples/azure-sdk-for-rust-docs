@@ -17,7 +17,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     )?;
 
     match key_vault_secret_client.get_secret("secret-name", "", None).await {
-        Ok(secret) => println!("Secret: {:?}", secret.into_body().await?.value),
+        Ok(secret) => println!("{}", secret.into_body().await?.value.unwrap_or_default()),
         Err(e) => match e.kind() {
             ErrorKind::HttpResponse { status, error_code, .. } if *status == StatusCode::NotFound => {
 
