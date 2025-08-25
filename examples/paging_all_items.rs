@@ -8,12 +8,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let credential = AzureCliCredential::new(None)?;
 
     let key_vault_endpoint = std::env::var("AZURE_KEY_VAULT_ENDPOINT")
-        .map_err(|_| {
-            std::io::Error::new(
-                std::io::ErrorKind::NotFound,
-                "AZURE_KEY_VAULT_ENDPOINT environment variable is required",
-            )
-        })?;
+        .map_err(|_| "AZURE_KEY_VAULT_ENDPOINT environment variable is required")?;
 
     let key_vault_secret_client = SecretClient::new(
         key_vault_endpoint.as_str(),

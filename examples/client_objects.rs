@@ -12,12 +12,7 @@ use azure_security_keyvault_secrets::{
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let user_assigned_id_value = std::env::var("AZURE_USER_ASSIGNED_IDENTITY")
-        .map_err(|_| {
-            std::io::Error::new(
-                std::io::ErrorKind::NotFound,
-                "AZURE_USER_ASSIGNED_IDENTITY environment variable is required",
-            )
-        })?;
+        .map_err(|_|"AZURE_USER_ASSIGNED_IDENTITY environment variable is required")?;
 
     let user_assigned_id = UserAssignedId::ClientId(user_assigned_id_value);
 
@@ -29,12 +24,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let credential = ManagedIdentityCredential::new(Some(credential_options))?;
 
     let key_vault_endpoint = std::env::var("AZURE_KEY_VAULT_ENDPOINT")
-        .map_err(|_| {
-            std::io::Error::new(
-                std::io::ErrorKind::NotFound,
-                "AZURE_KEY_VAULT_ENDPOINT environment variable is required",
-            )
-        })?;
+        .map_err(|_| "AZURE_KEY_VAULT_ENDPOINT environment variable is required")?;
 
     let secret_client_options = SecretClientOptions {
         api_version: "7.5".to_string(),
