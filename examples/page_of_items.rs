@@ -1,5 +1,5 @@
 use azure_identity::AzureCliCredential;
-use azure_security_keyvault_secrets::{ResourceExt, SecretClient};
+use azure_security_keyvault_secrets::SecretClient;
 use futures::TryStreamExt;
 
 #[tokio::main]
