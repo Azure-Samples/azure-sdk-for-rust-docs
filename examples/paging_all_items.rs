@@ -1,20 +1,18 @@
-use azure_identity::AzureCliCredential;
+use azure_identity::AzureDeveloperCliCredential;
 use azure_security_keyvault_secrets::{ResourceExt, SecretClient};
 use futures::TryStreamExt;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    
-    let credential = AzureCliCredential::new(None)?;
+    // <DOCS_AUTH>
+    dotazure::load()?;
+    // </DOCS_AUTH>
+    let credential = AzureDeveloperCliCredential::new(None)?;
 
-    let key_vault_endpoint = std::env::var("AZURE_KEY_VAULT_ENDPOINT")
-        .map_err(|_| "AZURE_KEY_VAULT_ENDPOINT environment variable is required")?;
+    let vault_url = std::env::var("AZURE_KEYVAULT_URL")
+        .map_err(|_| "AZURE_KEYVAULT_URL environment variable is required")?;
 
-    let client = SecretClient::new(
-        key_vault_endpoint.as_str(),
-        credential.clone(),
-        None,
-    )?;
+    let client = SecretClient::new(vault_url.as_str(), credential.clone(), None)?;
 
     // get a stream of items
     let mut pager = client.list_secret_properties(None)?;

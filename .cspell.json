@@ -1,0 +1,23 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "useGitignore": true,
+  "ignorePaths": [
+    ".cspell.json",
+    ".devcontainer/",
+    ".vscode/",
+    "rust-toolchain.toml"
+  ],
+  "words": [
+    "bicepparam",
+    "dotazure",
+  ],
+  "overrides": [
+    {
+      "filename": "**/*.md",
+      "dictionaries": [
+        "rust"
+      ]
+    }
+  ]
+}
