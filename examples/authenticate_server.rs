@@ -3,10 +3,9 @@ use azure_security_keyvault_secrets::SecretClient;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // <DOCS_AUTH>
+
     dotazure::load()?;
-    // </DOCS_AUTH>
-    // Get environment variables
+
     let vault_url = std::env::var("AZURE_KEYVAULT_URL")
         .map_err(|_| "AZURE_KEYVAULT_URL environment variable is required")?;
 
@@ -14,7 +13,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .ok()
         .map(|id| UserAssignedId::ClientId(id.clone()));
 
-    // Set up authentication
     let credential_options = ManagedIdentityCredentialOptions {
         user_assigned_id,
         ..Default::default()
@@ -22,7 +20,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let credential = ManagedIdentityCredential::new(Some(credential_options))?;
 
-    // Create a Key Vault client for secrets
     let client = SecretClient::new(vault_url.as_str(), credential.clone(), None)?;
 
     Ok(())
