@@ -5,19 +5,17 @@ use azure_security_keyvault_secrets::SecretClient;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
+    dotazure::load()?;
+
     let credential = AzureCliCredential::new(None)?;
 
-    let key_vault_endpoint = std::env::var("AZURE_KEY_VAULT_ENDPOINT")
-        .map_err(|_| "AZURE_KEY_VAULT_ENDPOINT environment variable is required")?;
+    let vault_url = std::env::var("AZURE_KEYVAULT_URL")
+        .map_err(|_| "AZURE_KEYVAULT_URL environment variable is required")?;
 
-    let client = SecretClient::new(
-        key_vault_endpoint.as_str(),
-        credential.clone(),
-        None,
-    )?;
+    let client = SecretClient::new(&vault_url, credential.clone(), None)?;
 
-    match client.get_secret("secret-name", "", None).await {
-        Ok(secret) => println!("{}", secret.into_body().await?.value.unwrap_or_else(|| Default::default())),
+    match client.get_secret("secret-0", "", None).await {
+        Ok(secret) => println!("Secret value: {}", secret.into_body().await?.value.unwrap_or_else(|| Default::default())),
         Err(e) => match e.kind() {
             ErrorKind::HttpResponse { status, error_code, .. } if *status == StatusCode::NotFound => {
 
