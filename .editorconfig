@@ -10,5 +10,5 @@ trim_trailing_whitespace = true
 [*.{bicep,bicepparam}]
 indent_size = 2
 
-[*.{toml,yml,yaml}]
+[*.{json,toml,yml,yaml}]
 indent_size = 2
