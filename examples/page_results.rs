@@ -18,7 +18,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     while let Some(page) = pager.try_next().await? {
 
-        let page = page.into_body().await?;
+        let page = page.into_body()?;
         println!("items_in_page: {}", page.value.len());
     }
 

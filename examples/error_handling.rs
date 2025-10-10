@@ -14,8 +14,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let client = SecretClient::new(&vault_url, credential.clone(), None)?;
 
-    match client.get_secret("secret-0", "", None).await {
-        Ok(secret) => println!("Secret value: {}", secret.into_body().await?.value.unwrap_or_else(|| Default::default())),
+    match client.get_secret("secret-0", None).await {
+        Ok(secret) => println!("Secret value: {}", secret.into_body()?.value.unwrap_or_default()),
         Err(e) => match e.kind() {
             ErrorKind::HttpResponse { status, error_code, .. } if *status == StatusCode::NotFound => {
 
