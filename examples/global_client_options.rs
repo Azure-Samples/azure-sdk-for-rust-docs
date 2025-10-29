@@ -16,8 +16,7 @@ fn create_client_options() -> ClientOptions {
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotazure::load()?;
 
-    let vault_url = std::env::var("AZURE_KEYVAULT_URL")
-        .map_err(|_| "AZURE_KEYVAULT_URL environment variable is required")?;
+    let vault_url = std::env::var("AZURE_KEYVAULT_URL")?;
 
     let credential = AzureDeveloperCliCredential::new(None)?;
 

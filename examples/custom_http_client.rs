@@ -48,8 +48,7 @@ impl HttpClient for UreqClient {
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotazure::load()?;
 
-    let vault_url = std::env::var("AZURE_KEYVAULT_URL")
-        .map_err(|_| "AZURE_KEYVAULT_URL environment variable is required")?;
+    let vault_url = std::env::var("AZURE_KEYVAULT_URL")?;
 
     // Create an instance of your custom HTTP client
     let http_client = Arc::new(UreqClient::default());

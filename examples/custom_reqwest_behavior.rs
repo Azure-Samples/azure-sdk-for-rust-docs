@@ -21,8 +21,7 @@ use std::sync::Arc;
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotazure::load()?;
 
-    let vault_url = std::env::var("AZURE_KEYVAULT_URL")
-        .map_err(|_| "AZURE_KEYVAULT_URL environment variable is required")?;
+    let vault_url = std::env::var("AZURE_KEYVAULT_URL")?;
 
     // Example: Customize the reqwest HTTP client with specific settings
     println!("Creating customized reqwest HTTP client...");

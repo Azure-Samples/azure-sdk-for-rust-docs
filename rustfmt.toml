@@ -1,0 +1,13 @@
+# Rust formatting configuration for stable channel
+# See: https://rust-lang.github.io/rustfmt/
+
+# Basic formatting that works on stable
+edition = "2021"
+max_width = 100
+hard_tabs = false
+tab_spaces = 4
+
+# Note: Import ordering requires nightly Rust
+# To use nightly for formatting only:
+# rustup toolchain install nightly
+# cargo +nightly fmt
