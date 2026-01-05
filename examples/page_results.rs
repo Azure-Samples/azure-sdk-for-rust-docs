@@ -4,7 +4,6 @@ use futures::TryStreamExt;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-
     dotazure::load()?;
 
     let credential = AzureCliCredential::new(None)?;
@@ -17,8 +16,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut pager = client.list_secret_properties(None)?.into_pages();
 
     while let Some(page) = pager.try_next().await? {
-
-        let page = page.into_body()?;
+        let page = page.into_model()?;
         println!("items_in_page: {}", page.value.len());
     }
 
