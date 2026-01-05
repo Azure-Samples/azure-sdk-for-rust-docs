@@ -4,7 +4,6 @@ use futures::TryStreamExt;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-
     dotazure::load()?;
 
     let credential = AzureDeveloperCliCredential::new(None)?;
@@ -17,7 +16,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut pager = client.list_secret_properties(None)?;
 
     while let Some(secret) = pager.try_next().await? {
-
         let name = secret.resource_id()?.name;
         println!("Found secret with name: {}", name);
     }
